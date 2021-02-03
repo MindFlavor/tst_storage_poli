@@ -35,18 +35,6 @@ pub fn new_blob_storage() -> StorageClient<BlobStorage> {
     StorageClient::<BlobStorage>::default()
 }
 
-pub trait Container {
-    type StorageType;
-
-    fn list_containers(&self) -> ListContainersRequest<Self::StorageType>;
-}
-
-//pub trait Blob {
-//    type StorageType;
-//
-//    fn put_blob(&self) -> PutBlobRequest<Self::StorageType>;
-//}
-
 fn main() {
     let cat = new_storage_v2().into_container_client();
     let mouse = new_blob_storage().into_container_client();
