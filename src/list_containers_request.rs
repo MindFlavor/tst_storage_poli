@@ -1,12 +1,12 @@
 use crate::*;
 
 #[derive(Debug, Clone)]
-pub struct ListContainersRequest<'a, T> {
-    container_client: &'a ContainerClient<T>,
+pub struct ListContainersRequest<'a, C: Container + ?Sized> {
+    container_client: &'a C,
 }
 
-impl<'a, T> ListContainersRequest<'a, T> {
-    pub fn new(container_client: &'a ContainerClient<T>) -> Self {
+impl<'a, C: Container + ?Sized> ListContainersRequest<'a, C> {
+    pub fn new(container_client: &'a C) -> Self {
         Self { container_client }
     }
 }

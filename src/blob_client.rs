@@ -7,14 +7,30 @@ pub struct BlobClient<T> {
 
 impl BlobClient<BlobStorage> {
     pub fn put_blob(&self) -> PutBlobRequestBlobStorage {
-        println!("list_containers --> {:?}", self);
+        println!("put blob (BlobStorage) --> {:?}", self);
         PutBlobRequestBlobStorage::new(self)
     }
 }
 
 impl BlobClient<StorageV2> {
     pub fn put_blob(&self) -> PutBlobRequestStorageV2 {
-        println!("list_containers --> {:?}", self);
+        println!("put blob (V2) --> {:?}", self);
         PutBlobRequestStorageV2::new(self)
+    }
+}
+
+impl<T> BlobClient<T>
+where
+    T: std::fmt::Debug,
+{
+    pub fn common_function(&self) {
+        println!("common_function (common) --> {:?}", self);
+    }
+}
+
+impl<T: std::fmt::Debug> BlobClient<T> {
+    pub fn list_blobs(&self) -> ListBlobsRequest<'_, T> {
+        println!("list blobs (common) --> {:?}", self);
+        ListBlobsRequest::new(self)
     }
 }

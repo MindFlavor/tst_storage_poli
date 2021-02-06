@@ -11,7 +11,7 @@ impl<'a> PutBlobRequestStorageV2<'a> {
     }
 
     pub fn execute(&self) {
-        println!("execute storage V2!");
+        println!("\texecute storage V2!");
     }
 }
 
@@ -26,6 +26,6 @@ impl<'a> PutBlobRequestBlobStorage<'a> {
     }
 
     pub fn execute(&self) {
-        println!("execute blob storage");
+        println!("\texecute blob storage!");
     }
 }

@@ -1,9 +1,11 @@
 mod blob_client;
 mod container_client;
+mod list_blobs_request;
 mod list_containers_request;
 mod put_blob_request;
 pub use blob_client::BlobClient;
-pub use container_client::ContainerClient;
+pub use container_client::{Container, ContainerClient};
+pub use list_blobs_request::ListBlobsRequest;
 pub use list_containers_request::ListContainersRequest;
 pub use put_blob_request::{PutBlobRequestBlobStorage, PutBlobRequestStorageV2};
 use std::fmt::Debug;
@@ -36,18 +38,21 @@ pub fn new_blob_storage() -> StorageClient<BlobStorage> {
 }
 
 fn main() {
-    let cat = new_storage_v2().into_container_client();
-    let mouse = new_blob_storage().into_container_client();
+    // Storage V2
+    let container = new_storage_v2().into_container_client();
+    container.list_containers();
 
-    cat.list_containers();
-    mouse.list_containers();
+    let blob = container.into_blob_client();
+    blob.put_blob().execute();
+    blob.list_blobs().execute();
+    blob.common_function();
 
-    let cat = cat.into_blob_client();
-    let mouse = mouse.into_blob_client();
+    // BlobStorage
+    let container = new_blob_storage().into_container_client();
+    container.list_containers();
 
-    let request_cat = cat.put_blob();
-    let request_mouse = mouse.put_blob();
-
-    request_cat.execute();
-    request_mouse.execute();
+    let blob = container.into_blob_client();
+    blob.put_blob().execute();
+    blob.list_blobs().execute();
+    blob.common_function();
 }

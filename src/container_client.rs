@@ -5,6 +5,10 @@ pub struct ContainerClient<T> {
     pub(crate) storage_client: StorageClient<T>,
 }
 
+pub trait Container {
+    fn list_containers(&self) -> ListContainersRequest<'_, Self>;
+}
+
 impl<T> ContainerClient<T>
 where
     T: std::fmt::Debug,
@@ -12,9 +16,14 @@ where
     pub fn into_blob_client(self) -> BlobClient<T> {
         BlobClient { blob_client: self }
     }
+}
 
-    pub fn list_containers(&self) -> ListContainersRequest<T> {
-        println!("list_containers --> {:?}", self);
+impl<T> Container for ContainerClient<T>
+where
+    T: std::fmt::Debug,
+{
+    fn list_containers(&self) -> ListContainersRequest<'_, Self> {
+        println!("list_containers (common) --> {:?}", self);
         ListContainersRequest::new(self)
     }
 }
