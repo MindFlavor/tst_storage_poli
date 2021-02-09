@@ -26,9 +26,7 @@ where
     pub fn common_function(&self) {
         println!("common_function (common) --> {:?}", self);
     }
-}
 
-impl<T: std::fmt::Debug> BlobClient<T> {
     pub fn list_blobs(&self) -> ListBlobsRequest<'_, T> {
         println!("list blobs (common) --> {:?}", self);
         ListBlobsRequest::new(self)
